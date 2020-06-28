@@ -16,8 +16,16 @@ app.listen(port, () => {
 });
 
 client.connect(err => {
-    const collection = client.db("test").collection("devices");
   // perform actions on the collection object
-  console.log("db connected")
-  client.close();
-})
+  if(!err) console.log("db connected");
+  const db = client.db('habit-app');
+  const usersCollection = db.collection('users')
+
+  app.post('/user', (req, res) => {
+    usersCollection.insertOne(req.body)
+      .then(result => {
+        console.log(result)
+      })
+      .catch(error => console.error(error))
+  })
+});
