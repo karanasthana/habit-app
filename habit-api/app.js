@@ -17,11 +17,12 @@ app.listen(port, () => {
 
 client.connect(err => {
   // perform actions on the collection object
+  // TODO Add a console.log function to call from everywhere to log only in cases of debug environment.
   if(!err) console.log("db connected");
   const db = client.db(Constants.DB.NAME);
-  const usersCollection = db.collection('users')
+  const usersCollection = db.collection(Constants.COLLECTIONS.USER_COLLECTION)
 
-  app.post('/user', (req, res) => {
+  app.post(Constants.API_ENDPOINTS.USER_ENDPOINT, (req, res) => {
     let params = req.body || {};
     console.log("request", req.body)
     usersCollection.insertOne(params)
